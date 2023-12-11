@@ -46,18 +46,18 @@ const AppGrid = (props: IAppGrid) => {
                 return rowData[field];
         }
     };
-    type INITVAL={
-        gridData:any[],
-        pagination:any[]
+    type INITVAL = {
+        gridData: any[],
+        pagination: any[]
     };
-    const initalValue:INITVAL={
-        gridData:[],
-        pagination:[]
+    const initalValue: INITVAL = {
+        gridData: [],
+        pagination: []
     }
     const [pageData, setData] = useState(initalValue);
     const [generate, setGenerate] = useState(true);
     const columnsValue = props.config.columns;
-    const getGridData = (pageNum: number, loadingId: UUID|string|null) => {
+    const getGridData = (pageNum: number, loadingId: UUID | string | null) => {
         if (props.config?.url) {
             // if (firstrenderignore) {
             //     firstrenderignore = false;
@@ -97,7 +97,7 @@ const AppGrid = (props: IAppGrid) => {
                     );
                 });
         } else if (props.config.data) {
-            setData((pre:any) => {
+            setData((pre: any) => {
                 return {
                     ...pre,
                     gridData: props.config.data?.slice((pageNum - 1) * 10, pageNum * 10),
@@ -105,18 +105,18 @@ const AppGrid = (props: IAppGrid) => {
             });
         }
     };
-    const setPagination = (totalCount: number, pageNum?: number | undefined|null) => {
+    const setPagination = (totalCount: number, pageNum?: number | undefined | null) => {
         let pagination = [];
         const pagesCount = totalCount / 10;
         for (let i = 0; i < pagesCount; i++) {
             const index = i + 1;
             pagination.push(
                 <li className={"page-item" + (index === pageNum ? " active" : '')}
-                onClick={() => {
-                    getGridData(index,null);
-                }}
-            
-                key={index} ><a className="page-link" href="#">{index}</a></li>
+                    onClick={() => {
+                        getGridData(index, null);
+                    }}
+
+                    key={index} ><a className="page-link" href="#">{index}</a></li>
             );
         }
         return pagination;
@@ -150,7 +150,7 @@ const AppGrid = (props: IAppGrid) => {
                             <td key={UtilityHelper.generate_uuidv4()}>
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={(row) => {
-                                        prop.onClick(d, row);
+                                        if (prop.onClick) prop.onClick(d, row);
                                     }} />
                                     {/* <label className="form-check-label" htmlFor="flexCheckDefault">
                                         Default checkbox
@@ -164,7 +164,7 @@ const AppGrid = (props: IAppGrid) => {
 
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={(row) => {
-                                        prop.onClick(d, row);
+                                        prop.onClick?.(d, row);
                                     }} />
                                     {/* <label className="form-check-label" htmlFor="flexCheckDefault">
                                         Default checkbox
@@ -176,7 +176,7 @@ const AppGrid = (props: IAppGrid) => {
                         return <td key={UtilityHelper.generate_uuidv4()}>...</td>;
                     const datacolumn = (
                         <td key={UtilityHelper.generate_uuidv4()}>
-                            {generateField(d, prop.field, prop.type, prop.template)}
+                            {generateField(d, prop.field!, prop.type, prop.template)}
                             {/* {d[prop.field]} */}
                         </td>
                     );
@@ -205,13 +205,19 @@ const AppGrid = (props: IAppGrid) => {
     );
 };
 export default React.memo(AppGrid);
-interface IAppGrid{
-    config: { columns: IAppGridColumn[]; url?: string; data?: any[]; id: string | number; }
+interface IAppGrid {
+    config: IAppGridConfig
 }
-interface IAppGridColumn{
-    onClick(d: any, row: React.ChangeEvent<HTMLInputElement>): unknown;
-    field:string;
-    title:string;
-    type?:any;
+export interface IAppGridConfig {
+    columns: IAppGridColumn[];
+    url?: string;
+    data?: any[] | null;
+    id: string | number;
+}
+interface IAppGridColumn {
+    onClick?: (data: any, row?: React.ChangeEvent<HTMLInputElement>) => any;
+    field?: string;
+    title: string;
+    type?: any;
     template?: any;
 }

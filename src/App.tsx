@@ -1,15 +1,27 @@
+import React from 'react';
 import './App.css';
-import { NavLink, Routes, Route } from 'react-router-dom';
-import Swapi from './Swapi/Swapi';
-import AppNavbar from './Frontend/Structure/App-Routes';
-import AppRoutes from './Frontend/Structure/App-Navbar copy';
-function App() {
+import AppConditional from './Frontend/Structure/App-Conditional';
+import AppNavbar from './Frontend/Structure/App-Navbar';
+import AppRoutes from './Frontend/Structure/App-Routes';
+const App = () => {
   return (
-    <div className="App">
-      <AppNavbar/>
-      <AppRoutes/>
-      
-    </div>
+    <React.Fragment>
+      <div className="">
+        <AppNavbar />
+        <main >
+          <div className="container mt-4" style={{ "minWidth": "100%" }}>
+            <div className='jumbotron'>
+              <form >
+                <AppRoutes />
+              </form>
+              <AppConditional />
+            </div>
+          </div>
+        </main>
+      </div>
+      <footer>
+      </footer>
+    </React.Fragment>
   );
 }
 
