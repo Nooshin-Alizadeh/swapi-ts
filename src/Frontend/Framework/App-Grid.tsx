@@ -210,7 +210,7 @@ interface IAppGrid {
 }
 export interface IAppGridConfig {
     columns: IAppGridColumn[];
-    url?: string;
+    url?: string | null;
     data?: any[] | null;
     id: string | number;
 }
