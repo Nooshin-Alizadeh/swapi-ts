@@ -9,6 +9,7 @@ import { UUID } from "crypto";
 import { useDispatch } from "react-redux";
 import { AppAlertType } from "./App-Alert";
 import DataService from "./DataService";
+import { capitalize } from "lodash";
 let firstrenderignore = true;
 const AppGrid = (props: IAppGrid) => {
     const dispatch = useDispatch();
@@ -192,7 +193,7 @@ const AppGrid = (props: IAppGrid) => {
                 <thead>
                     <tr>
                         {props.config.columns.map((prop) => {
-                            return <th key={UtilityHelper.generate_uuidv4()}>{prop.title}</th>;
+                            return <th key={UtilityHelper.generate_uuidv4()}>{capitalize(prop.title)}</th>;
                         })}
                     </tr>
                 </thead>

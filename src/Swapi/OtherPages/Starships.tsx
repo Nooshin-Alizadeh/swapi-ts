@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import AppGrid, { IAppGridConfig } from '../../Frontend/Framework/App-Grid';
 import UtilityHelper from '../../Frontend/Framework/AppUtility';
+import { Link } from 'react-router-dom';
 
 interface StarshipsProps {
   gridDataValue?: any | null;
@@ -14,6 +15,9 @@ const Starships: FC<StarshipsProps> = (props) => {
       {
         field: 'name',
         title: 'Name',
+        template: (row: any) => {
+          return (<Link to={(row.url).split('/')[5]}> {row.name}</Link>)
+        }
       },
       {
         field: 'model',

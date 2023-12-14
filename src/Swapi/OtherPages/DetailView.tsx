@@ -1,17 +1,12 @@
 /* eslint-disable eqeqeq */
-// import { Badge, Button, Form } from "react-bootstrap";
-// import Framework from "../../../Framework/Framework";
 import { useDispatch } from "react-redux";
-// import { modalAction } from "../../../Store/modalManager";
-// import DataService from "../../../Framework/DataService";
-// import { loadingAction } from "../../../Store/loadingManager";
 import { UUID } from "crypto";
 import DetailGenerate from "../DetailGenerate";
 import UtilityHelper from "../../Frontend/Framework/AppUtility";
 import DataService from "../../Frontend/Framework/DataService";
 import { loadingAction } from "../../Frontend/Store/loadingManager";
 import { modalAction } from "../../Frontend/Store/modalManager";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 // import Films from "../Films/Films";
 // import Species from "../Species/Species";
@@ -20,19 +15,23 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const loadingId = UtilityHelper.generate_uuidv4();
-
-const PeopleDetail = (props: { created: string | number | Date; edited: string | number | Date; name: any; gender: any; films: string | any[]; species: string | any[]; starships: string | any[]; vehicles: string | any[]; }) => {
+//{ created: string | number | Date; edited: string | number | Date; name: any; gender: any; films: string | any[]; species: string | any[]; starships: string | any[]; vehicles: string | any[]; }
+const DetailView = (props?: any | null) => {
   const dispatch = useDispatch();
   let params = useParams();
-  const created = new Date(props.created);
-  const edited = new Date(props.edited);
+  //let href = useHref();
+  let location = useLocation();
+  //const matches = useMatches();
+  //const navigation = useNavigation();
+  // const created = new Date(props?.created);
+  // const edited = new Date(props?.edited);
   const [body, setBody] = useState();
 
   let dataService = new DataService(dispatch, loadingId);
   useEffect(() => {
-    console.info('peopledetail effect')
     if (params && params.id) {
-      dataService.Get(`people/${params.id}`).then((dval) => {
+      // dataService.Get(`people/${params.id}`).then((dval) => {
+      dataService.Get(`${location.pathname}`).then((dval) => {
         setBody(dval)
       });
     }
@@ -44,11 +43,14 @@ const PeopleDetail = (props: { created: string | number | Date; edited: string |
   const detailBody = (
     <>
       <DetailGenerate detailObject={body}></DetailGenerate>
+      {/* <div className="bg-success">
+<Outlet></Outlet>
+      </div> */}
     </>
   );
   return detailBody;
 };
-export default PeopleDetail;
+export default DetailView;
 const OnClickList = (props: any, dataService: any, dispatch: any, loadingId: UUID | string, name: any, component: any) => {
   props.onHide();
   dataService

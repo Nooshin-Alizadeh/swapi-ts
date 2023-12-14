@@ -9,7 +9,7 @@ import { AppAlertType } from "./App-Alert";
 class DataService {
   dispatch: Dispatch<UnknownAction>;
   id: string;
-  constructor(dispatch: Dispatch<UnknownAction>, id: UUID|string) {
+  constructor(dispatch: Dispatch<UnknownAction>, id: UUID | string) {
     this.dispatch = dispatch;
     this.id = id;
   }
@@ -39,9 +39,9 @@ class DataService {
     });
   }
 
-  async GetMulti(urls: string[]) {
+  async GetMulti(urls: string[], loading = true) {
     const requests = urls.map((s) => axios.get(s));
-    this.dispatch(loadingAction.isLoading({ valueState: true, id: this.id }));
+    loading && this.dispatch(loadingAction.isLoading({ valueState: true, id: this.id }));
     return Promise.all(requests);
   }
   async Get(url: string, params?: { [x: string]: any; }) {

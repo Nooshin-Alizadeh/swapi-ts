@@ -3,7 +3,7 @@
 // import Grid from "../../../Framework/Grid";
 import { useDispatch } from "react-redux";
 // import { modalAction } from "../../../Store/modalManager";
-import PeopleDetail from "./PeopleDetail";
+import DetailView from "../OtherPages/DetailView";
 
 import DetailGenerate from "../DetailGenerate";
 import { Link } from "react-router-dom";
@@ -30,7 +30,7 @@ const People = () => {
             modalAction.modalConfig({
               config: {
                 title: data.name,
-                body: PeopleDetail,
+                body: DetailView,
                 bodyDetail: data,
               },
             })
@@ -135,7 +135,6 @@ const People = () => {
     data: null,
     url: "people",
   };
-  // debugger;
   return (<>
     {/* <Prompt when={true} message ={(loc)=>{
 **ATTENTION : this is on version 5 of react-router-dom

@@ -12,11 +12,11 @@ const AppModal = (props: { config: any;  onHide: any; size?: any; }) => {
   };
 
   const modalBase = (
-    <div className="modal">
-      <div className={"modal-dialog " + (props.size || "modal-lg")}>
+    <div className="modal" tabIndex={-1} role="dialog">
+      <div className={"modal-dialog " + (props.size || "modal-lg")} role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">{config.title}</h5>
+            <h5 className="modal-title">{config.title} this is modal</h5>
             <button
               type="button"
               className="btn-close"
