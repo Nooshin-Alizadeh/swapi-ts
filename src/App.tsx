@@ -3,6 +3,8 @@ import './App.css';
 import AppConditional from './Frontend/Structure/App-Conditional';
 import AppNavbar from './Frontend/Structure/App-Navbar';
 import AppRoutes from './Frontend/Structure/App-Routes';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+//import 'bootstrap/dist/css/bootstrap.min.css'
 const App = () => {
   return (
     <React.Fragment>
